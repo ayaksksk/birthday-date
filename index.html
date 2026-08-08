@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, My Love! 🌸🕷️🥩</title>
+    <title>Birthday Date Invitation 🌸🕷️🥩</title>
     <style>
         :root {
             --primary: #ff6b81;
@@ -30,27 +30,6 @@
             padding: 20px;
         }
 
-        /* Admin Edit Toolbar - Hidden by default */
-        .edit-toolbar {
-            width: 100%;
-            max-width: 600px;
-            display: none; /* Controlled by JS via ?admin=true */
-            justify-content: flex-end;
-            margin-bottom: 10px;
-            gap: 10px;
-        }
-
-        .btn-edit-mode {
-            background: #2ed573;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
         .card {
             background: white;
             border-radius: 20px;
@@ -61,6 +40,7 @@
             text-align: center;
             position: relative;
             margin-bottom: 25px;
+            margin-top: 10px;
         }
 
         h1 {
@@ -73,14 +53,6 @@
             font-size: 1.1rem;
             color: #747d8c;
             margin-bottom: 20px;
-        }
-
-        /* Editable Highlights */
-        [contenteditable="true"] {
-            outline: 2px dashed var(--accent) !important;
-            background-color: #fff9e6;
-            border-radius: 4px;
-            padding: 2px 4px;
         }
 
         /* Countdown */
@@ -251,14 +223,9 @@
 </head>
 <body>
 
-    <!-- Controls for Editing (Hidden unless ?admin=true is in URL) -->
-    <div class="edit-toolbar" id="adminToolbar">
-        <button class="btn-edit-mode" id="toggleEditBtn" onclick="toggleEditMode()">✎ Edit Details</button>
-    </div>
-
     <div class="card">
-        <h1 class="editable" id="mainTitle">Happy Birthday, My Love! 🎉</h1>
-        <p class="subtitle editable" id="subTitle">August 10 is all about you. Click any stop below to see the details!</p>
+        <h1>Happy Birthday, Baby! 🎉</h1>
+        <p class="subtitle">August 10 is all about you. Click any stop below to see the details!</p>
 
         <!-- Countdown -->
         <div class="timer-container">
@@ -270,57 +237,57 @@
         <!-- Interactive Timeline Stops -->
         <div class="timeline">
             <div class="event" onclick="showDetails('stop1')">
-                <div class="event-icon editable" id="icon1">💐</div>
+                <div class="event-icon">💐</div>
                 <div class="event-details">
-                    <h3 class="editable" id="stop1Title">Stop 1: Dangwa Flower Market</h3>
-                    <p class="editable" id="stop1Desc">Picking out fresh, beautiful flowers to start your day. (Click for details)</p>
+                    <h3>Stop 1: Dangwa Flower Market</h3>
+                    <p>Lezzgo dangwa first, we'll buy a flowers for the birthday gurl🥰🎉</p>
                 </div>
             </div>
 
             <div class="event" onclick="showDetails('stop2')">
-                <div class="event-icon editable" id="icon2">🕷️</div>
+                <div class="event-icon">🕷️</div>
                 <div class="event-details">
-                    <h3 class="editable" id="stop2Title">Stop 2: Cinema Movie Date</h3>
-                    <p class="editable" id="stop2Desc">Popcorn & Spider-Man on the big screen. (Click for details)</p>
+                    <h3>Stop 2: Cinema Movie Date</h3>
+                    <p>Magsisine tayo after dangwa. Lezzwatch spider man😎🫶</p>
                 </div>
             </div>
 
             <div class="event" onclick="showDetails('stop3')">
-                <div class="event-icon editable" id="icon3">🥩</div>
+                <div class="event-icon">🥩</div>
                 <div class="event-details">
-                    <h3 class="editable" id="stop3Title">Stop 3: Samgyupsal Dinner</h3>
-                    <p class="editable" id="stop3Desc">Unlimited grilled meat & side dishes! (Click for details)</p>
+                    <h3>Stop 3: Samgyupsal Dinner</h3>
+                    <p>At pang last, ang almost a month na nating cravings 👍</p>
                 </div>
             </div>
         </div>
 
         <!-- Detailed Breakdown Popups -->
         <div id="stop1" class="detail-section">
-            <h4><span>💐</span> <span class="editable" id="d1Title">Dangwa Flower Date</span></h4>
+            <h4><span>💐</span> Dangwa Flower Date</h4>
             <div class="detail-info">
-                <p class="editable" id="d1Text">We'll stroll around Dangwa flower market where you can pick your absolute favorite bouquet! Fresh roses, sunflowers, or tulips—it's all your choice.</p>
-                <div class="info-tag editable" id="d1Tag">📍 Location: Sampaloc, Manila | ⏰ Time: Morning</div>
+                <p>We'll stroll around Dangwa flower market where you can pick your absolute favorite bouquet!</p>
+                <div class="info-tag">📍 Location: Sampaloc, Manila | ⏰ Time: Morning</div>
             </div>
         </div>
 
         <div id="stop2" class="detail-section">
-            <h4><span>🕷️</span> <span class="editable" id="d2Title">Spider-Man Movie Date</span></h4>
+            <h4><span>🕷️</span> Spider-Man Movie Date</h4>
             <div class="detail-info">
-                <p class="editable" id="d2Text">Sit back, relax, and enjoy your favorite web-slinger on the cinema screen! Complete with large popcorn and cold drinks.</p>
-                <div class="info-tag editable" id="d2Tag">📍 Location: Cinema Theater | ⏰ Time: Afternoon</div>
+                <p>Sit back, relax, and enjoy your favorite web-slinger on the cinema screen! Complete with large popcorn and cold drinks.</p>
+                <div class="info-tag">📍 Location: Cinema Theater | ⏰ Time: Afternoon</div>
             </div>
         </div>
 
         <div id="stop3" class="detail-section">
-            <h4><span>🥩</span> <span class="editable" id="d3Title">K-BBQ Samgyupsal Feast</span></h4>
+            <h4><span>🥩</span> Samgyupsal Feast</h4>
             <div class="detail-info">
-                <p class="editable" id="d3Text">Ending the night with a full stomach! All-you-can-eat pork, beef, cheese dip, and endless side dishes to celebrate your birthday.</p>
-                <div class="info-tag editable" id="d3Tag">📍 Location: Samgyupsal Grill | ⏰ Time: Evening</div>
+                <p>Ending the night with a full stomach! All-you-can-eat pork, beef, cheese dip, and endless side dishes to celebrate your birthday.</p>
+                <div class="info-tag">📍 Location: Romantic Baboy | ⏰ Time: Evening</div>
             </div>
         </div>
 
         <!-- Invitation Question -->
-        <p style="margin-top: 25px; font-weight: 600;" class="editable" id="questionText">Will you go on this birthday date with me?</p>
+        <p style="margin-top: 25px; font-weight: 600;">Will you go on this birthday date with me?</p>
 
         <!-- Action Buttons -->
         <div class="actions">
@@ -332,15 +299,7 @@
     </div>
 
     <script>
-        // Check for ?admin=true URL parameter to show the Edit button
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('admin') === 'true') {
-                document.getElementById('adminToolbar').style.display = 'flex';
-            }
-        });
-
-        // Countdown Logic (Target set to August 10, 2026)
+        // Target Date: August 10, 2026
         const bdayDate = new Date("August 10, 2026 00:00:00").getTime();
 
         function updateCountdown() {
@@ -368,7 +327,7 @@
         function showDetails(stopId) {
             const target = document.getElementById(stopId);
             
-            if (target.classList.contains('active') && !isEditing) {
+            if (target.classList.contains('active')) {
                 target.classList.remove('active');
             } else {
                 document.querySelectorAll('.detail-section').forEach(sec => sec.classList.remove('active'));
@@ -377,42 +336,8 @@
             }
         }
 
-        // Edit Mode Toggle
-        let isEditing = false;
-        function toggleEditMode() {
-            isEditing = !isEditing;
-            const editables = document.querySelectorAll('.editable');
-            const btn = document.getElementById('toggleEditBtn');
-
-            if (isEditing) {
-                btn.innerText = "💾 Save Edits";
-                btn.style.background = "#ff4757";
-                document.querySelectorAll('.detail-section').forEach(sec => sec.classList.add('active'));
-                editables.forEach(el => el.setAttribute('contenteditable', 'true'));
-            } else {
-                btn.innerText = "✎ Edit Details";
-                btn.style.background = "#2ed573";
-                editables.forEach(el => el.removeAttribute('contenteditable'));
-                document.querySelectorAll('.detail-section').forEach(sec => sec.classList.remove('active'));
-                
-                // Save state to LocalStorage
-                editables.forEach(el => {
-                    localStorage.setItem('bday_edit_' + el.id, el.innerHTML);
-                });
-            }
-        }
-
-        // Load Saved Edits on Launch
-        window.onload = function() {
-            document.querySelectorAll('.editable').forEach(el => {
-                const saved = localStorage.getItem('bday_edit_' + el.id);
-                if (saved) el.innerHTML = saved;
-            });
-        };
-
         // Dodge effect for "No" button
         function dodgeButton() {
-            if (isEditing) return;
             const btn = document.getElementById('noBtn');
             const x = Math.random() * (window.innerWidth - 100) - (window.innerWidth / 2 - 50);
             const y = Math.random() * (window.innerHeight - 100) - (window.innerHeight / 2 - 50);
