@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Date Invitation 🌸🕷️🥩</title>
+    <title>Happy Birthday, My Love! 🌸🕷️🥩</title>
     <style>
         :root {
             --primary: #ff6b81;
@@ -30,10 +30,11 @@
             padding: 20px;
         }
 
+        /* Admin Edit Toolbar - Hidden by default */
         .edit-toolbar {
             width: 100%;
             max-width: 600px;
-            display: flex;
+            display: none; /* Controlled by JS via ?admin=true */
             justify-content: flex-end;
             margin-bottom: 10px;
             gap: 10px;
@@ -250,8 +251,8 @@
 </head>
 <body>
 
-    <!-- Controls for Editing -->
-    <div class="edit-toolbar">
+    <!-- Controls for Editing (Hidden unless ?admin=true is in URL) -->
+    <div class="edit-toolbar" id="adminToolbar">
         <button class="btn-edit-mode" id="toggleEditBtn" onclick="toggleEditMode()">✎ Edit Details</button>
     </div>
 
@@ -331,7 +332,15 @@
     </div>
 
     <script>
-        // Countdown Logic (Set target to August 10, 2026)
+        // Check for ?admin=true URL parameter to show the Edit button
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('admin') === 'true') {
+                document.getElementById('adminToolbar').style.display = 'flex';
+            }
+        });
+
+        // Countdown Logic (Target set to August 10, 2026)
         const bdayDate = new Date("August 10, 2026 00:00:00").getTime();
 
         function updateCountdown() {
@@ -357,10 +366,8 @@
 
         // Show/Hide Quick Details
         function showDetails(stopId) {
-            const isEditing = document.body.classList.contains('edit-mode');
             const target = document.getElementById(stopId);
             
-            // Toggle view
             if (target.classList.contains('active') && !isEditing) {
                 target.classList.remove('active');
             } else {
