@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Date Invitation 🌸🕷️🥩</title>
+    <style>
+        :root {
+            --primary: #ff6b81;
+            --secondary: #ff4757;
+            --accent: #ffa502;
+            --bg: #fff5f6;
+            --text: #2f3542;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .edit-toolbar {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+
+        .btn-edit-mode {
+            background: #2ed573;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: var(--secondary);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #747d8c;
+            margin-bottom: 20px;
+        }
+
+        /* Editable Highlights */
+        [contenteditable="true"] {
+            outline: 2px dashed var(--accent) !important;
+            background-color: #fff9e6;
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+
+        /* Countdown */
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .time-box {
+            background: #ffeaa7;
+            padding: 10px 15px;
+            border-radius: 10px;
+            min-width: 70px;
+        }
+
+        .time-box span {
+            display: block;
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: #d63031;
+        }
+
+        .time-box label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #636e72;
+        }
+
+        /* Itinerary Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .event {
+            display: flex;
+            align-items: center;
+            background: #fff0f3;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .event:hover {
+            transform: translateX(5px);
+            background: #ffe3e8;
+        }
+
+        .event-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+
+        .event-details h3 {
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+
+        .event-details p {
+            font-size: 0.9rem;
+            color: #57606f;
+            margin-top: 2px;
+        }
+
+        /* Detailed Stop Breakdown */
+        .detail-section {
+            display: none;
+            text-align: left;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #ffeaa7;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .detail-section.active {
+            display: block;
+        }
+
+        .detail-section h4 {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-info {
+            font-size: 0.95rem;
+            color: #2f3542;
+            line-height: 1.5;
+        }
+
+        .info-tag {
+            display: inline-block;
+            background: #ffeaa7;
+            color: #d63031;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Buttons */
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            min-height: 50px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-yes {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 129, 0.4);
+        }
+
+        .btn-yes:hover {
+            background-color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .btn-no {
+            background-color: #dfe4ea;
+            color: #747d8c;
+            position: absolute;
+            right: 20%;
+        }
+
+        #response-msg {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #eccc68;
+            color: #2f3542;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Controls for Editing -->
+    <div class="edit-toolbar">
+        <button class="btn-edit-mode" id="toggleEditBtn" onclick="toggleEditMode()">✎ Edit Details</button>
+    </div>
+
+    <div class="card">
+        <h1 class="editable" id="mainTitle">Happy Birthday, My Love! 🎉</h1>
+        <p class="subtitle editable" id="subTitle">August 10 is all about you. Click any stop below to see the details!</p>
+
+        <!-- Countdown -->
+        <div class="timer-container">
+            <div class="time-box"><span id="hours">00</span><label>Hours</label></div>
+            <div class="time-box"><span id="minutes">00</span><label>Mins</label></div>
+            <div class="time-box"><span id="seconds">00</span><label>Secs</label></div>
+        </div>
+
+        <!-- Interactive Timeline Stops -->
+        <div class="timeline">
+            <div class="event" onclick="showDetails('stop1')">
+                <div class="event-icon editable" id="icon1">💐</div>
+                <div class="event-details">
+                    <h3 class="editable" id="stop1Title">Stop 1: Dangwa Flower Market</h3>
+                    <p class="editable" id="stop1Desc">Picking out fresh, beautiful flowers to start your day. (Click for details)</p>
+                </div>
+            </div>
+
+            <div class="event" onclick="showDetails('stop2')">
+                <div class="event-icon editable" id="icon2">🕷️</div>
+                <div class="event-details">
+                    <h3 class="editable" id="stop2Title">Stop 2: Cinema Movie Date</h3>
+                    <p class="editable" id="stop2Desc">Popcorn & Spider-Man on the big screen. (Click for details)</p>
+                </div>
+            </div>
+
+            <div class="event" onclick="showDetails('stop3')">
+                <div class="event-icon editable" id="icon3">🥩</div>
+                <div class="event-details">
+                    <h3 class="editable" id="stop3Title">Stop 3: Samgyupsal Dinner</h3>
+                    <p class="editable" id="stop3Desc">Unlimited grilled meat & side dishes! (Click for details)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Breakdown Popups -->
+        <div id="stop1" class="detail-section">
+            <h4><span>💐</span> <span class="editable" id="d1Title">Dangwa Flower Date</span></h4>
+            <div class="detail-info">
+                <p class="editable" id="d1Text">We'll stroll around Dangwa flower market where you can pick your absolute favorite bouquet! Fresh roses, sunflowers, or tulips—it's all your choice.</p>
+                <div class="info-tag editable" id="d1Tag">📍 Location: Sampaloc, Manila | ⏰ Time: Morning</div>
+            </div>
+        </div>
+
+        <div id="stop2" class="detail-section">
+            <h4><span>🕷️</span> <span class="editable" id="d2Title">Spider-Man Movie Date</span></h4>
+            <div class="detail-info">
+                <p class="editable" id="d2Text">Sit back, relax, and enjoy your favorite web-slinger on the cinema screen! Complete with large popcorn and cold drinks.</p>
+                <div class="info-tag editable" id="d2Tag">📍 Location: Cinema Theater | ⏰ Time: Afternoon</div>
+            </div>
+        </div>
+
+        <div id="stop3" class="detail-section">
+            <h4><span>🥩</span> <span class="editable" id="d3Title">K-BBQ Samgyupsal Feast</span></h4>
+            <div class="detail-info">
+                <p class="editable" id="d3Text">Ending the night with a full stomach! All-you-can-eat pork, beef, cheese dip, and endless side dishes to celebrate your birthday.</p>
+                <div class="info-tag editable" id="d3Tag">📍 Location: Samgyupsal Grill | ⏰ Time: Evening</div>
+            </div>
+        </div>
+
+        <!-- Invitation Question -->
+        <p style="margin-top: 25px; font-weight: 600;" class="editable" id="questionText">Will you go on this birthday date with me?</p>
+
+        <!-- Action Buttons -->
+        <div class="actions">
+            <button class="btn btn-yes" onclick="acceptInvitation()">YES, I'D LOVE TO! 💕</button>
+            <button class="btn btn-no" id="noBtn" onmouseover="dodgeButton()">No 😜</button>
+        </div>
+
+        <div id="response-msg"></div>
+    </div>
+
+    <script>
+        // Countdown Logic (Set target to August 10, 2026)
+        const bdayDate = new Date("August 10, 2026 00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = bdayDate - now;
+
+            if (diff <= 0) {
+                document.querySelector('.timer-container').innerHTML = "<b style='color: var(--secondary); font-size: 1.2rem;'>IT'S YOUR BIRTHDAY TODAY! 🎂</b>";
+                return;
+            }
+
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Show/Hide Quick Details
+        function showDetails(stopId) {
+            const isEditing = document.body.classList.contains('edit-mode');
+            const target = document.getElementById(stopId);
+            
+            // Toggle view
+            if (target.classList.contains('active') && !isEditing) {
+                target.classList.remove('active');
+            } else {
+                document.querySelectorAll('.detail-section').forEach(sec => sec.classList.remove('active'));
+                target.classList.add('active');
+                target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Edit Mode Toggle
+        let isEditing = false;
+        function toggleEditMode() {
+            isEditing = !isEditing;
+            const editables = document.querySelectorAll('.editable');
+            const btn = document.getElementById('toggleEditBtn');
+
+            if (isEditing) {
+                btn.innerText = "💾 Save Edits";
+                btn.style.background = "#ff4757";
+                document.querySelectorAll('.detail-section').forEach(sec => sec.classList.add('active'));
+                editables.forEach(el => el.setAttribute('contenteditable', 'true'));
+            } else {
+                btn.innerText = "✎ Edit Details";
+                btn.style.background = "#2ed573";
+                editables.forEach(el => el.removeAttribute('contenteditable'));
+                document.querySelectorAll('.detail-section').forEach(sec => sec.classList.remove('active'));
+                
+                // Save state to LocalStorage
+                editables.forEach(el => {
+                    localStorage.setItem('bday_edit_' + el.id, el.innerHTML);
+                });
+            }
+        }
+
+        // Load Saved Edits on Launch
+        window.onload = function() {
+            document.querySelectorAll('.editable').forEach(el => {
+                const saved = localStorage.getItem('bday_edit_' + el.id);
+                if (saved) el.innerHTML = saved;
+            });
+        };
+
+        // Dodge effect for "No" button
+        function dodgeButton() {
+            if (isEditing) return;
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 100) - (window.innerWidth / 2 - 50);
+            const y = Math.random() * (window.innerHeight - 100) - (window.innerHeight / 2 - 50);
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        // Accept message
+        function acceptInvitation() {
+            const msg = document.getElementById('response-msg');
+            msg.style.display = 'block';
+            msg.innerHTML = "Yay! 💖 It's a date! Can't wait to celebrate with you on August 10!";
+        }
+    </script>
+</body>
+</html>
